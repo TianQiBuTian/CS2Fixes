@@ -635,7 +635,6 @@ CON_COMMAND_CHAT(showteam, "<name> - Get a player's current team")
 	}
 }
 
-#if _DEBUG
 CON_COMMAND_CHAT(myuid, "- Test")
 {
 	if (!player)
@@ -1020,4 +1019,3 @@ CON_COMMAND_CHAT(discordbot, "<bot> <message> - Send a message to a discord webh
 
 	g_pDiscordBotManager->PostDiscordMessage(args[1], args[2]);
 }
-#endif // _DEBUG

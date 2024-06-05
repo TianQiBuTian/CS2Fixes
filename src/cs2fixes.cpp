@@ -674,9 +674,7 @@ void CS2Fixes::Hook_ClientActive( CPlayerSlot slot, bool bLoadGame, const char *
 
 void CS2Fixes::Hook_ClientCommand( CPlayerSlot slot, const CCommand &args )
 {
-#ifdef _DEBUG
 	Message( "Hook_ClientCommand(%d, \"%s\")\n", slot, args.GetCommandString() );
-#endif
 
 	if (g_fIdleKickTime > 0.0f)
 	{
@@ -703,9 +701,7 @@ void CS2Fixes::Hook_ClientCommand( CPlayerSlot slot, const CCommand &args )
 
 void CS2Fixes::Hook_ClientSettingsChanged( CPlayerSlot slot )
 {
-#ifdef _DEBUG
 	Message( "Hook_ClientSettingsChanged(%d)\n", slot );
-#endif
 }
 
 void CS2Fixes::Hook_OnClientConnected(CPlayerSlot slot, const char* pszName, uint64 xuid, const char* pszNetworkID, const char* pszAddress, bool bFakePlayer)

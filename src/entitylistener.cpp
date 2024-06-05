@@ -43,10 +43,8 @@ void Patch_GetHammerUniqueId(CEntityInstance *pEntity)
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
-#ifdef _DEBUG
 	const char* pszClassName = pEntity->m_pEntity->m_designerName.String();
 	Message("Entity spawned: %s %s\n", pszClassName, ((CBaseEntity*)pEntity)->m_sUniqueHammerID().Get());
-#endif
 
 	if (g_bGrenadeNoBlock && V_stristr(pEntity->GetClassname(), "_projectile"))
 	{

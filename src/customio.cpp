@@ -73,9 +73,7 @@ static void AddOutputCustom_Targetname(CBaseEntity*                  pInstance,
 {
     pInstance->SetName(vecArgs[1].c_str());
 
-#ifdef _DEBUG
     Message("SetName %s to %d", vecArgs[1].c_str(), pInstance->GetHandle().GetEntryIndex());
-#endif
 }
 
 static void AddOutputCustom_Origin(CBaseEntity*                  pInstance,
@@ -88,9 +86,7 @@ static void AddOutputCustom_Origin(CBaseEntity*                  pInstance,
                   clamp(Q_atof(vecArgs[3].c_str()), -16384.f, 16384.f));
     pInstance->Teleport(&origin, nullptr, nullptr);
 
-#ifdef _DEBUG
     Message("SetOrigin %f %f %f for %s", origin.x, origin.y, origin.z, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Angles(CBaseEntity*                  pInstance,
@@ -103,9 +99,7 @@ static void AddOutputCustom_Angles(CBaseEntity*                  pInstance,
                   clamp(Q_atof(vecArgs[3].c_str()), -360.f, 360.f));
     pInstance->Teleport(nullptr, &angles, nullptr);
 
-#ifdef _DEBUG
     Message("SetAngles %f %f %f for %s", angles.x, angles.y, angles.z, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_MaxHealth(CBaseEntity*                  pInstance,
@@ -115,10 +109,8 @@ static void AddOutputCustom_MaxHealth(CBaseEntity*                  pInstance,
 {
     pInstance->m_iMaxHealth(clamp(Q_atoi(vecArgs[1].c_str()), 0, INT_MAX));
 
-#ifdef _DEBUG
     const int m_iMaxHealth = pInstance->m_iMaxHealth;
     Message("SetMaxHealth %d for %s", m_iMaxHealth, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Health(CBaseEntity*                  pInstance,
@@ -128,10 +120,8 @@ static void AddOutputCustom_Health(CBaseEntity*                  pInstance,
 {
     pInstance->m_iHealth(clamp(Q_atoi(vecArgs[1].c_str()), 0, INT_MAX));
 
-#ifdef _DEBUG
     const int m_iHealth = pInstance->m_iHealth;
     Message("SetHealth %d for %s", m_iHealth, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_MoveType(CBaseEntity*                  pInstance,
@@ -145,9 +135,7 @@ static void AddOutputCustom_MoveType(CBaseEntity*                  pInstance,
 
     pInstance->SetMoveType(type);
 
-#ifdef _DEBUG
     Message("SetMoveType %d for %s", type, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_EntityTemplate(CBaseEntity*                  pInstance,
@@ -161,9 +149,7 @@ static void AddOutputCustom_EntityTemplate(CBaseEntity*                  pInstan
         const auto pValue  = g_pEntitySystem->AllocPooledString(vecArgs[1].c_str());
         pEntity->m_iszTemplate(pValue);
 
-#ifdef _DEBUG
         Message("Set EntityTemplate to %s for %s\n", pValue.String(), pInstance->GetName());
-#endif
     }
     else
         Message("Only env_entity_maker is supported\n");
@@ -180,9 +166,7 @@ static void AddOutputCustom_BaseVelocity(CBaseEntity*                  pInstance
 
     pInstance->SetBaseVelocity(velocity);
 
-#ifdef _DEBUG
     Message("SetOrigin %f %f %f for %s", velocity.x, velocity.y, velocity.z, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_AbsVelocity(CBaseEntity*                  pInstance,
@@ -196,9 +180,7 @@ static void AddOutputCustom_AbsVelocity(CBaseEntity*                  pInstance,
 
     pInstance->Teleport(nullptr, nullptr, &velocity);
 
-#ifdef _DEBUG
     Message("SetOrigin %f %f %f for %s", velocity.x, velocity.y, velocity.z, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Target(CBaseEntity*                  pInstance,
@@ -211,9 +193,7 @@ static void AddOutputCustom_Target(CBaseEntity*                  pInstance,
         const auto pEntity = pInstance;
         pEntity->m_target(pTarget->m_pEntity->m_name);
 
-#ifdef _DEBUG
         Message("Set Target to %s for %s\n", pTarget->m_pEntity->m_name.String(), pEntity->m_pEntity->m_name.String());
-#endif
     }
 }
 
@@ -230,9 +210,7 @@ static void AddOutputCustom_FilterName(CBaseEntity*                  pInstance,
             pTrigger->m_iFilterName(pTarget->GetName());
             pTrigger->m_hFilter(pTarget->GetRefEHandle());
 
-#ifdef _DEBUG
             Message("Set FilterName to %s for %s\n", pTarget->GetName(), pTrigger->GetName());
-#endif
         }
     }
 }
@@ -248,9 +226,7 @@ static void AddOutputCustom_Force(CBaseEntity*                  pInstance,
     {
         pEntity->m_force(value);
 
-#ifdef _DEBUG
         Message("Set force to %f for %s\n", value, pEntity->GetName());
-#endif
     }
 }
 
@@ -263,9 +239,7 @@ static void AddOutputCustom_Gravity(CBaseEntity*                  pInstance,
 
     pInstance->m_flGravityScale = value;
 
-#ifdef _DEBUG
     Message("Set gravity to %f for %s\n", value, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Timescale(CBaseEntity*                  pInstance,
@@ -277,9 +251,7 @@ static void AddOutputCustom_Timescale(CBaseEntity*                  pInstance,
 
     pInstance->m_flTimeScale = value;
 
-#ifdef _DEBUG
     Message("Set timescale to %f for %s\n", value, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Friction(CBaseEntity*                  pInstance,
@@ -291,9 +263,7 @@ static void AddOutputCustom_Friction(CBaseEntity*                  pInstance,
 
     pInstance->m_flFriction = value;
 
-#ifdef _DEBUG
     Message("Set friction to %f for %s\n", value, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_Speed(CBaseEntity*                  pInstance,
@@ -314,9 +284,7 @@ static void AddOutputCustom_Speed(CBaseEntity*                  pInstance,
 
     pController->GetZEPlayer()->SetSpeedMod(value);
 
-#ifdef _DEBUG
     Message("Set speed to %f for %s\n", value, pInstance->GetName());
-#endif
 }
 
 static void AddOutputCustom_RunSpeed(CBaseEntity*                  pInstance,
@@ -333,9 +301,7 @@ static void AddOutputCustom_RunSpeed(CBaseEntity*                  pInstance,
 
     pPawn->m_flVelocityModifier = value;
 
-#ifdef _DEBUG
     Message("Set runspeed to %f for %s\n", value, pInstance->GetName());
-#endif
 }
 
 const std::vector<AddOutputInfo_t> s_AddOutputHandlers = {
