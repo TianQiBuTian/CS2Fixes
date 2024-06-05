@@ -131,14 +131,12 @@ FAKE_FLOAT_CVAR(zr_infect_shake_frequency, "Frequency of shaking effect", g_flIn
 FAKE_FLOAT_CVAR(zr_infect_shake_duration, "Duration of shaking effect", g_flInfectShakeDuration, 5.f, false);
 
 // meant only for offline config validation and can easily cause issues when used on live server
-#ifdef _DEBUG
 CON_COMMAND_F(zr_reload_classes, "Reload ZR player classes", FCVAR_SPONLY | FCVAR_LINKED_CONCOMMAND)
 {
 	g_pZRPlayerClassManager->LoadPlayerClass();
 
 	Message("Reloaded ZR player classes.\n");
 }
-#endif
 
 void ZR_Precache(IEntityResourceManifest* pResourceManifest)
 {
