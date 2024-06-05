@@ -1091,7 +1091,6 @@ CON_COMMAND_CHAT_FLAGS(setpos, "<x y z> - Set your origin", ADMFLAG_CHEATS)
 	PrintSingleAdminAction(player->GetPlayerName(), szOrigin, "teleported to");
 }
 
-#ifdef _DEBUG
 CON_COMMAND_CHAT_FLAGS(add_dc, "<name> <SteamID 64> <IP Address> - Adds a fake player to disconnected player list for testing", ADMFLAG_GENERIC)
 {
 	if (args.ArgC() < 3)
@@ -1111,7 +1110,6 @@ CON_COMMAND_CHAT_FLAGS(add_dc, "<name> <SteamID 64> <IP Address> - Adds a fake p
 
 	g_pAdminSystem->AddDisconnectedPlayer(args[1], iSteamID, args[3]);
 }
-#endif
 
 CAdminSystem::CAdminSystem()
 {
