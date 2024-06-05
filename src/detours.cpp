@@ -92,7 +92,6 @@ FAKE_BOOL_CVAR(cs2f_fix_block_dmg, "Whether to fix block-damage on players", g_b
 
 void FASTCALL Detour_CBaseEntity_TakeDamageOld(CBaseEntity* pThis, CTakeDamageInfo* inputInfo)
 {
-#ifdef _DEBUG
 	Message("\n--------------------------------\n"
 			"TakeDamage on %s\n"
 			"Attacker: %s\n"
@@ -107,7 +106,6 @@ void FASTCALL Detour_CBaseEntity_TakeDamageOld(CBaseEntity* pThis, CTakeDamageIn
 			inputInfo->m_hAbility.Get() ? inputInfo->m_hAbility.Get()->GetClassname() : "NULL",
 			inputInfo->m_flDamage,
 			inputInfo->m_bitsDamageType);
-#endif
 
 	// Block all player damage if desired
 	if (g_bBlockAllDamage && pThis->IsPawn())
@@ -353,13 +351,11 @@ void FASTCALL Detour_UTIL_SayText2Filter(
 	const char* param3,
 	const char* param4)
 {
-#ifdef _DEBUG
 	CPlayerSlot slot = filter.GetRecipientIndex(0);
 	CCSPlayerController* target = CCSPlayerController::FromSlot(slot);
 
 	if (target)
 		Message("Chat from %s to %s: %s\n", param1, target->GetPlayerName(), param2);
-#endif
 
 	UTIL_SayText2Filter(filter, pEntity, eMessageType, msg_name, param1, param2, param3, param4);
 }

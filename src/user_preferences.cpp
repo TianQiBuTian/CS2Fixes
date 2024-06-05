@@ -107,9 +107,7 @@ bool CUserPreferencesSystem::PutPreferences(int iSlot, uint64 iSteamId, CUtlMap<
 	if (!player || !player->IsAuthenticated()) return false;
 	if (iSteamId != player->GetSteamId64())
 		return false;
-#ifdef _DEBUG
 	Message("Putting data for %llu\n", iSteamId);
-#endif
 	m_mUserSteamIds[iSlot] = iSteamId;
 	m_mPreferencesLoaded[iSlot] = true;
 	FOR_EACH_MAP(preferenceData, i)
@@ -166,9 +164,7 @@ const char* CUserPreferencesSystem::GetPreference(int iSlot, const char* sKey, c
 {
 	uint32 iKeyHash = hash_32_fnv1a_const(sKey);
 	int iKeyIdx = m_mPreferencesMaps[iSlot].Find(iKeyHash);
-#ifdef _DEBUG
 	Message("User at slot %d is reading from preference '%s' with hash %d at index %d.\n", iSlot, sKey, iKeyHash, iKeyIdx);
-#endif
 	if (iKeyIdx == m_mPreferencesMaps[iSlot].InvalidIndex()) return sDefaultValue;
 	return (const char*)m_mPreferencesMaps[iSlot][iKeyIdx].GetValue();
 }
@@ -192,9 +188,7 @@ float CUserPreferencesSystem::GetPreferenceFloat(int iSlot, const char* sKey, fl
 void CUserPreferencesSystem::SetPreference(int iSlot, const char* sKey, const char* sValue)
 {
 	uint32 iKeyHash = hash_32_fnv1a_const(sKey);
-#ifdef _DEBUG
 	Message("User at slot %d is storing in preference '%s' with hash %d value '%s'.\n", iSlot, sKey, iKeyHash, sValue);
-#endif
 
 	// Create or populate the content of the preference value
 	int iValueIdx = m_mPreferencesMaps[iSlot].Find(iKeyHash);
@@ -260,9 +254,7 @@ void CUserPreferencesREST::JsonToPreferencesMap(json data, CUtlMap<uint32, CPref
 		std::string value = it.value();
 
 		// Prepare the key and value pair, and also the key name via hashes
-#ifdef _DEBUG
 		Message("- Storing KV-pair: %s, %s\n", key.c_str(), value.c_str());
-#endif
 		CPreferenceValue* prefValue = new CPreferenceValue(key.c_str(), value.c_str());
 
 		// Store key, value, and key names
@@ -273,18 +265,14 @@ void CUserPreferencesREST::JsonToPreferencesMap(json data, CUtlMap<uint32, CPref
 
 void CUserPreferencesREST::LoadPreferences(uint64 iSteamId, StorageCallback cb)
 {
-#ifdef _DEBUG
 	Message("Loading data for %llu\n", iSteamId);
-#endif
 	if (m_pszUserPreferencesUrl[0] == '\0') return;
 
 	// Submit the request to pull the user data
 	char sUserPreferencesUrl[256];
 	V_snprintf(sUserPreferencesUrl, sizeof(sUserPreferencesUrl), "%s%llu", m_pszUserPreferencesUrl, iSteamId);
 	g_HTTPManager.GET(sUserPreferencesUrl, [iSteamId, cb](HTTPRequestHandle request, json data) {
-#ifdef _DEBUG
 		Message("Executing storage callback during load for %llu\n", iSteamId);
-#endif
 		CUtlMap<uint32, CPreferenceValue> preferencesMap;
 		((CUserPreferencesREST*)g_pUserPreferencesStorage)->JsonToPreferencesMap(data, preferencesMap);
 		cb(iSteamId, preferencesMap);
@@ -294,9 +282,7 @@ void CUserPreferencesREST::LoadPreferences(uint64 iSteamId, StorageCallback cb)
 
 void CUserPreferencesREST::StorePreferences(uint64 iSteamId, CUtlMap<uint32, CPreferenceValue>& preferences, StorageCallback cb)
 {
-#ifdef _DEBUG
 	Message("Storing data for %llu\n", iSteamId);
-#endif
 	if (m_pszUserPreferencesUrl[0] == '\0') return;
 
 	// Create the JSON object with all key-value pairs
@@ -318,9 +304,7 @@ void CUserPreferencesREST::StorePreferences(uint64 iSteamId, CUtlMap<uint32, CPr
 	// Dump the Json object and submit the POST request
 	std::string sDumpedJson = sJsonObject.dump();
 	g_HTTPManager.POST(sUserPreferencesUrl, sDumpedJson.c_str(), [iSteamId, cb](HTTPRequestHandle request, json data) {
-#ifdef _DEBUG
 		Message("Executing storage callback during store for %llu\n", iSteamId);
-#endif
 		CUtlMap<uint32, CPreferenceValue> preferencesMap;
 		((CUserPreferencesREST*)g_pUserPreferencesStorage)->JsonToPreferencesMap(data, preferencesMap);
 		cb(iSteamId, preferencesMap);
